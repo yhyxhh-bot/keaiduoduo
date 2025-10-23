@@ -1,0 +1,937 @@
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宠爱之家 - 专业宠物寄养小院</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 引入Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#4CAF50', // 主色调：温暖的绿色，代表自然和舒适
+            secondary: '#FF9800', // 辅助色：温暖的橙色，代表关爱和活力
+            neutral: '#F5F5F5', // 中性色：浅灰色背景
+            dark: '#333333', // 深色文本
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .bg-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234caf50' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      }
+    }
+  </style>
+</head>
+<body class="font-sans text-dark bg-white">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/95 shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        <!-- Logo -->
+        <a href="#" class="flex items-center space-x-2">
+          <i class="fa fa-paw text-primary text-3xl"></i>
+          <span class="text-xl font-bold text-primary">可爱多多宠爱之家</span>
+        </a>
+        
+        <!-- 桌面导航 -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="#home" class="text-dark hover:text-primary transition-colors font-medium">首页</a>
+          <a href="#about" class="text-dark hover:text-primary transition-colors font-medium">关于我们</a>
+          <a href="#environment" class="text-dark hover:text-primary transition-colors font-medium">环境展示</a>
+          <a href="#services" class="text-dark hover:text-primary transition-colors font-medium">服务项目</a>
+          <a href="#prices" class="text-dark hover:text-primary transition-colors font-medium">价格套餐</a>
+          <a href="#contact" class="text-dark hover:text-primary transition-colors font-medium">联系我们</a>
+        </nav>
+        
+        <!-- 预约按钮 -->
+        <a href="#booking" class="hidden md:block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-all shadow-md hover:shadow-lg">
+          立即预约
+        </a>
+        
+        <!-- 移动端菜单按钮 -->
+        <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+          <i class="fa fa-bars text-2xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+      <div class="container mx-auto px-4 py-3 space-y-3">
+        <a href="#home" class="block text-dark hover:text-primary transition-colors font-medium py-2">首页</a>
+        <a href="#about" class="block text-dark hover:text-primary transition-colors font-medium py-2">关于我们</a>
+        <a href="#environment" class="block text-dark hover:text-primary transition-colors font-medium py-2">环境展示</a>
+        <a href="#services" class="block text-dark hover:text-primary transition-colors font-medium py-2">服务项目</a>
+        <a href="#prices" class="block text-dark hover:text-primary transition-colors font-medium py-2">价格套餐</a>
+        <a href="#contact" class="block text-dark hover:text-primary transition-colors font-medium py-2">联系我们</a>
+        <a href="#booking" class="block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full text-center transition-all shadow-md hover:shadow-lg">
+          立即预约
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区域 -->
+  <section id="home" class="pt-24 md:pt-0 min-h-screen flex items-center relative overflow-hidden bg-pattern">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent z-0"></div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6 md:space-y-8">
+          <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-shadow">
+            像家一样<br>
+            <span class="text-primary">宠爱您的宝贝</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-600 max-w-lg">
+            我们提供温馨舒适的寄养环境，专业细心的照顾，让您的宠物在您外出时也能享受家一般的关爱与呵护。
+          </p>
+          <div class="flex flex-wrap gap-4 pt-4">
+            <a href="#booking" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full text-lg font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              立即预约
+            </a>
+            <a href="#environment" class="bg-white border-2 border-primary text-primary hover:bg-primary/5 px-8 py-3 rounded-full text-lg font-medium transition-all shadow-md hover:shadow-lg">查看环境</a>
+          </div>
+          <div class="flex items-center space-x-6 pt-6">
+            <div class="flex -space-x-2">
+              <img src="https://picsum.photos/id/237/100/100" alt="客户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1025/100/100" alt="客户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <img src="https://picsum.photos/id/1062/100/100" alt="客户头像" class="w-10 h-10 rounded-full border-2 border-white">
+              <div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-white flex items-center justify-center text-primary font-medium text-sm">
+                99+
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center text-yellow-400">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <span class="ml-2 text-gray-700 font-medium">4.9/5</span>
+              </div>
+              <p class="text-gray-500 text-sm">来自1000+宠物主人的好评</p>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+            <img src="https://picsum.photos/id/169/800/600" alt="宠物在寄养小院开心玩耍" class="w-full h-auto">
+          </div>
+          <div class="absolute top-1/4 -right-6 w-32 h-32 bg-secondary/20 rounded-full filter blur-2xl"></div>
+          <div class="absolute bottom-1/3 -left-8 w-40 h-40 bg-primary/20 rounded-full filter blur-3xl"></div>
+          <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl z-20 max-w-[200px]">
+            <div class="flex items-center space-x-3 mb-2">
+              <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                <i class="fa fa-home text-primary text-xl"></i>
+              </div>
+              <div>
+                <h3 class="font-bold">宽敞空间</h3>
+                <p class="text-gray-500 text-sm">每只宠物都有充足活动空间</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <a href="#about" class="text-primary/70 hover:text-primary transition-colors">
+        <i class="fa fa-angle-down text-3xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 关于我们 -->
+  <section id="about" class="py-20 bg-neutral">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">关于宠爱之家</h2>
+        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg">我们是一群热爱动物的专业人士，致力于为您的宠物提供最舒适、最安全的寄养环境</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+            <i class="fa fa-heart text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">用心关爱</h3>
+          <p class="text-gray-600">我们视每一位宠物为家人，给予它们无微不至的关怀和照顾，让它们感受到家的温暖。</p>
+        </div>
+        
+        <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+            <i class="fa fa-leaf text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">优质环境</h3>
+          <p class="text-gray-600">宽敞明亮的活动空间，定期消毒清洁，天然环保的设施，为宠物提供健康舒适的生活环境。</p>
+        </div>
+        
+        <div class="bg-white rounded-xl p-8 shadow-md card-hover">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+            <i class="fa fa-user-md text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">专业团队</h3>
+          <p class="text-gray-600">我们的团队成员均经过专业培训，熟悉宠物习性，能及时发现并处理宠物的各种需求和问题。</p>
+        </div>
+      </div>
+      
+      <div class="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="relative">
+          <div class="rounded-2xl overflow-hidden shadow-xl">
+            <img src="https://picsum.photos/id/1025/800/600" alt="我们的团队与宠物互动" class="w-full h-auto">
+          </div>
+          <div class="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-xl shadow-lg max-w-[220px]">
+            <p class="text-3xl font-bold"></p>
+            <p class="text-white/80">专业寄养经验</p>
+          </div>
+        </div>
+        
+        <div class="space-y-6">
+          <h3 class="text-2xl md:text-3xl font-bold">我们的故事</h3>
+          <p class="text-gray-600">宠爱之家创立于2025年，源于我们对动物的无限热爱。我们发现很多宠物主人在外出时，总是为宠物的安置问题而烦恼。</p>
+          <p class="text-gray-600">因此，我们打造了这个"家外之家"，让宠物在主人不在身边时，也能享受到专业的照顾和舒适的生活环境。</p>
+          
+          <div class="grid grid-cols-2 gap-6 pt-4">
+            <div>
+              <p class="text-4xl font-bold text-primary">1000+</p>
+              <p class="text-gray-600">满意客户</p>
+            </div>
+            <div>
+              <p class="text-4xl font-bold text-primary">5000+</p>
+              <p class="text-gray-600">宠物接待</p>
+            </div>
+            <div>
+              <p class="text-4xl font-bold text-primary">300㎡</p>
+              <p class="text-gray-600">活动空间</p>
+            </div>
+            <div>
+              <p class="text-4xl font-bold text-primary">24/7</p>
+              <p class="text-gray-600">全天候看护</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 环境展示 -->
+  <section id="environment" class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">舒适环境展示</h2>
+        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg">我们精心打造每一个空间，确保您的宠物在这里能感受到家的舒适与安全</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="rounded-xl overflow-hidden shadow-lg group relative h-80 card-hover">
+          <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/79900b6a7885485b9b5b0baf80a8b40d~tplv-a9rns2rl98-image.image?rcl=202510161533009E1A43BC5D979C7B282B&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1761204784&amp;x-signature=DHU5JlRvCJUxUAWE%2FhAzBtf%2FVtE%3D" alt="室内活动区" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 text-white">
+              <h3 class="text-xl font-bold mb-2">室内活动区</h3>
+              <p>宽敞明亮的室内空间，配备舒适的休息区和丰富的玩具</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden shadow-lg group relative h-80 card-hover">
+          <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/79dd2bbef30e4254b9fe587d89302bcc~tplv-a9rns2rl98-image.image?rcl=20251016153325C7C143156B6C80548B98&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1761204809&amp;x-signature=wTcLVAEBTVSfIHfpvOCeOf1%2BHIY%3D" alt="户外花园" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 text-white">
+              <h3 class="text-xl font-bold mb-2">户外花园</h3>
+              <p>安全围栏环绕的户外活动空间，让宠物享受阳光和新鲜空气</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden shadow-lg group relative h-80 card-hover">
+          <img src="https://picsum.photos/id/237/600/800" alt="独立休息间" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 text-white">
+              <h3 class="text-xl font-bold mb-2">独立休息间</h3>
+              <p>安静舒适的私人空间，保证宠物充足的休息和睡眠</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden shadow-lg group relative h-80 card-hover">
+          <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/a758f558ac1f406fbf0f9f0ad98a801a~tplv-a9rns2rl98-image.image?rcl=20251016153342B78529277BCFF6B9CAAA&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1761204826&amp;x-signature=6h3uu6xHiBksXBcLGSQnFAZPFo0%3D" alt="游乐设施区" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 text-white">
+              <h3 class="text-xl font-bold mb-2">游乐设施区</h3>
+              <p>专为宠物设计的游乐设施，让它们在玩乐中锻炼身体</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden shadow-lg group relative h-80 card-hover">
+          <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/65a3f6976a2740f49256c9d4ae8f0650~tplv-a9rns2rl98-image.image?rcl=20251016153406924498C8AC11079065AA&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1761204850&amp;x-signature=iku2lYA1HSUxsgaKlZD%2Ft2eGaso%3D" alt="宠物用餐区" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 text-white">
+              <h3 class="text-xl font-bold mb-2">宠物用餐区</h3>
+              <p>干净整洁的用餐环境，定时定量提供营养均衡的食物</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="rounded-xl overflow-hidden shadow-lg group relative h-80 card-hover">
+          <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/3e6c0d438e8c408eb2fc47bfd5dd78e7~tplv-a9rns2rl98-image.image?rcl=2025101615343480CDADED44A1D5FBFD6F&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1761204878&amp;x-signature=RSRKRh72wI%2FOqw3jViIYpCKxg90%3D" alt="宠物浴室" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6 text-white">
+              <h3 class="text-xl font-bold mb-2">宠物浴室</h3>
+              <p>专业的洗浴设备和温和的洗浴产品，让宠物保持清洁健康</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-16 text-center">
+        <a href="#booking" class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full text-lg font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          预约参观 <i class="fa fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 服务项目 -->
+  <section id="services" class="py-20 bg-neutral">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">我们的服务</h2>
+        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg">除了优质的寄养服务，我们还提供多种贴心服务，满足您宠物的各种需求</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-xl overflow-hidden shadow-md flex card-hover">
+          <div class="w-1/3 bg-primary/10 flex items-center justify-center p-6">
+            <i class="fa fa-home text-primary text-4xl"></i>
+          </div>
+          <div class="w-2/3 p-6">
+            <h3 class="text-xl font-bold mb-2">专业寄养服务</h3>
+            <p class="text-gray-600">提供短期和长期寄养服务，根据宠物的品种、年龄和习性提供个性化照顾，包括定时喂食、遛弯、玩耍等。</p>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl overflow-hidden shadow-md flex card-hover">
+          <div class="w-1/3 bg-primary/10 flex items-center justify-center p-6">
+            <i class="fa fa-bath text-primary text-4xl"></i>
+          </div>
+          <div class="w-2/3 p-6">
+            <h3 class="text-xl font-bold mb-2">美容洗护服务</h3>
+            <p class="text-gray-600">专业的宠物美容师提供洗澡、剪毛、指甲修剪等服务，使用温和无刺激的宠物专用洗护产品。</p>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl overflow-hidden shadow-md flex card-hover">
+          <div class="w-1/3 bg-primary/10 flex items-center justify-center p-6">
+            <i class="fa fa-dumbbell text-primary text-4xl"></i>
+          </div>
+          <div class="w-2/3 p-6">
+            <h3 class="text-xl font-bold mb-2">运动锻炼服务</h3>
+            <p class="text-gray-600">根据宠物的品种和体能，安排适当的运动和游戏，确保宠物在寄养期间保持良好的身体状态。</p>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl overflow-hidden shadow-md flex card-hover">
+          <div class="w-1/3 bg-primary/10 flex items-center justify-center p-6">
+            <i class="fa fa-medkit text-primary text-4xl"></i>
+          </div>
+          <div class="w-2/3 p-6">
+            <h3 class="text-xl font-bold mb-2">健康监测服务</h3>
+            <p class="text-gray-600">每日记录宠物的饮食、睡眠和精神状态，如发现异常及时联系主人和附近的宠物医院。</p>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl overflow-hidden shadow-md flex card-hover">
+          <div class="w-1/3 bg-primary/10 flex items-center justify-center p-6">
+            <i class="fa fa-camera text-primary text-4xl"></i>
+          </div>
+          <div class="w-2/3 p-6">
+            <h3 class="text-xl font-bold mb-2">日常拍照服务</h3>
+            <p class="text-gray-600">定期为寄养的宠物拍照或录制视频，通过微信等方式发送给主人，让主人随时了解宠物的状况。</p>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl overflow-hidden shadow-md flex card-hover">
+          <div class="w-1/3 bg-primary/10 flex items-center justify-center p-6">
+            <i class="fa fa-car text-primary text-4xl"></i>
+          </div>
+          <div class="w-2/3 p-6">
+            <h3 class="text-xl font-bold mb-2">接送服务</h3>
+            <p class="text-gray-600">提供宠物上门接送服务，为不方便亲自送接宠物的主人提供便利，需提前预约。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 价格套餐 -->
+  <section id="prices" class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">价格套餐</h2>
+        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg">透明合理的价格，为您的宠物提供高性价比的寄养服务</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- 小型犬套餐 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover border-t-4 border-primary">
+          <div class="p-8">
+            <h3 class="text-xl font-bold mb-2">小型犬套餐</h3>
+            <p class="text-gray-500 mb-6">适合体重10kg以下的小型犬</p>
+            <div class="flex items-end mb-6">
+              <span class="text-4xl font-bold">¥88</span>
+              <span class="text-gray-500 ml-2">/天</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>舒适独立休息空间</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日2次户外活动</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>定时喂食（可自带食物）</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日健康监测</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每周1次免费洗澡</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日照片反馈</span>
+              </li>
+            </ul>
+            <a href="#booking" class="block w-full text-center bg-primary/10 hover:bg-primary/20 text-primary py-3 rounded-lg font-medium transition-colors">
+              选择此套餐
+            </a>
+          </div>
+        </div>
+        
+        <!-- 中型犬套餐 -->
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden card-hover border-t-4 border-secondary transform md:-translate-y-4">
+          <div class="bg-secondary text-white text-center py-2 text-sm font-medium">
+            最受欢迎
+          </div>
+          <div class="p-8">
+            <h3 class="text-xl font-bold mb-2">中型犬套餐</h3>
+            <p class="text-gray-500 mb-6">适合体重10-25kg的中型犬</p>
+            <div class="flex items-end mb-6">
+              <span class="text-4xl font-bold">¥128</span>
+              <span class="text-gray-500 ml-2">/天</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>宽敞活动空间</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日3次户外活动</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>定时喂食（可自带食物）</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日健康监测</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每周2次免费洗澡</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日视频/照片反馈</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>额外30分钟互动玩耍</span>
+              </li>
+            </ul>
+            <a href="#booking" class="block w-full text-center bg-secondary hover:bg-secondary/90 text-white py-3 rounded-lg font-medium transition-colors">
+              选择此套餐
+            </a>
+          </div>
+        </div>
+        
+        <!-- 大型犬套餐 -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover border-t-4 border-primary">
+          <div class="p-8">
+            <h3 class="text-xl font-bold mb-2">大型犬套餐</h3>
+            <p class="text-gray-500 mb-6">适合体重25kg以上的大型犬</p>
+            <div class="flex items-end mb-6">
+              <span class="text-4xl font-bold">¥168</span>
+              <span class="text-gray-500 ml-2">/天</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>超大活动空间</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日4次户外活动</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>定时喂食（可自带食物）</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日健康监测</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每周2次免费洗澡</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日视频/照片反馈</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>额外1小时互动玩耍</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>专业牵引训练指导</span>
+              </li>
+            </ul>
+            <a href="#booking" class="block w-full text-center bg-primary/10 hover:bg-primary/20 text-primary py-3 rounded-lg font-medium transition-colors">
+              选择此套餐
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-12 bg-white p-6 rounded-xl shadow-md">
+        <h3 class="text-xl font-bold mb-4 text-center">猫咪寄养套餐</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <div class="flex items-end mb-4">
+              <span class="text-3xl font-bold">¥68</span>
+              <span class="text-gray-500 ml-2">/天</span>
+            </div>
+            <ul class="space-y-2">
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>独立猫笼或猫别墅</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>定时喂食和换水</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日清理猫砂盆</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每日互动玩耍时间</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fa fa-check text-primary mr-3"></i>
+                <span>每周1次免费清洁</span>
+              </li>
+            </ul>
+          </div>
+          <div class="flex items-center justify-center">
+            <a href="#booking" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full text-lg font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              预约猫咪寄养
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-10 text-center text-gray-500">
+        <p>注：长期寄养（15天以上）可享受9折优惠，30天以上可享受8折优惠</p>
+        <p class="mt-2">额外服务（如特殊训练、美容等）需另行收费，详情请咨询客服</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 客户评价 -->
+  <section class="py-20 bg-neutral">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">客户的心声</h2>
+        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg">看看其他宠物主人对我们服务的评价</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+          <div class="flex text-yellow-400 mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+          </div>
+          <p class="text-gray-600 mb-6">"第一次把我家金毛寄养在这里，本来还很担心，结果工作人员每天都发视频给我，看到狗狗玩得很开心，回来的时候也很健康，以后肯定还会再来！"</p>
+          <div class="flex items-center">
+            <img src="https://picsum.photos/id/64/100/100" alt="客户头像" class="w-12 h-12 rounded-full mr-4">
+            <div>
+              <h4 class="font-bold">李女士</h4>
+              <p class="text-gray-500 text-sm">金毛Lucky的妈妈</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+          <div class="flex text-yellow-400 mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+          </div>
+          <p class="text-gray-600 mb-6">"环境非常干净整洁，我家猫咪比较胆小，工作人员很有耐心，特意安排了安静的独立空间。回来后猫咪状态很好，完全没有应激反应，太感谢了！"</p>
+          <div class="flex items-center">
+            <img src="https://picsum.photos/id/91/100/100" alt="客户头像" class="w-12 h-12 rounded-full mr-4">
+            <div>
+              <h4 class="font-bold">张先生</h4>
+              <p class="text-gray-500 text-sm">猫咪Momo的爸爸</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-md card-hover">
+          <div class="flex text-yellow-400 mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-half-o"></i>
+          </div>
+          <p class="text-gray-600 mb-6">"服务很专业，价格也合理。我家泰迪比较挑食，工作人员很细心地按照我的要求喂食。还帮忙做了美容，接回来的时候香喷喷的，毛修剪得也很整齐！"</p>
+          <div class="flex items-center">
+            <img src="https://picsum.photos/id/26/100/100" alt="客户头像" class="w-12 h-12 rounded-full mr-4">
+            <div>
+              <h4 class="font-bold">王女士</h4>
+              <p class="text-gray-500 text-sm">泰迪Coco的妈妈</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 预约区域 -->
+  <section id="booking" class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6">预约寄养服务</h2>
+          <p class="text-gray-600 text-lg mb-8">填写以下信息预约宠物寄养服务，我们的工作人员会尽快与您联系确认详情</p>
+          
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-gray-700 font-medium mb-2">您的姓名</label>
+                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="请输入您的姓名">
+              </div>
+              <div>
+                <label for="phone" class="block text-gray-700 font-medium mb-2">联系电话</label>
+                <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="请输入您的联系电话">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="pet-type" class="block text-gray-700 font-medium mb-2">宠物类型</label>
+                <select id="pet-type" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                  <option value="">请选择宠物类型</option>
+                  <option value="small-dog">小型犬</option>
+                  <option value="medium-dog">中型犬</option>
+                  <option value="large-dog">大型犬</option>
+                  <option value="cat">猫咪</option>
+                  <option value="other">其他宠物</option>
+                </select>
+              </div>
+              <div>
+                <label for="pet-name" class="block text-gray-700 font-medium mb-2">宠物名字</label>
+                <input type="text" id="pet-name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="请输入宠物的名字">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="check-in" class="block text-gray-700 font-medium mb-2">寄养开始日期</label>
+                <input type="date" id="check-in" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+              </div>
+              <div>
+                <label for="check-out" class="block text-gray-700 font-medium mb-2">寄养结束日期</label>
+                <input type="date" id="check-out" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+              </div>
+            </div>
+            
+            <div>
+              <label for="notes" class="block text-gray-700 font-medium mb-2">特殊需求或备注</label>
+              <textarea id="notes" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" placeholder="请告诉我们您的宠物是否有特殊饮食习惯、健康状况或其他需要注意的事项"></textarea>
+            </div>
+            
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg text-lg font-medium transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              提交预约 <i class="fa fa-paper-plane ml-2"></i>
+            </button>
+          </form>
+        </div>
+        
+        <div class="relative">
+          <div class="rounded-2xl overflow-hidden shadow-xl">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/0978e243bc604d62b9f50ce3e7b82be4~tplv-a9rns2rl98-image.image?rcl=20251016153526576B521065F969F08EC6&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1761204931&amp;x-signature=IlFC0wmfxfTUVdvg%2F2kQlM7c9TE%3D" alt="宠物在寄养小院" class="w-full h-auto">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系我们 -->
+  <section id="contact" class="py-20 bg-neutral">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">联系我们</h2>
+        <div class="w-20 h-1 bg-primary mx-auto mb-6"></div>
+        <p class="text-gray-600 text-lg">如有任何疑问，欢迎随时联系我们，我们将竭诚为您服务</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div class="bg-white p-8 rounded-xl shadow-md text-center card-hover">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fa fa-map-marker text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">地址</h3>
+          <p class="text-gray-600">北京市朝阳区宠物乐园路88号宠爱之家小院</p>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-md text-center card-hover">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fa fa-phone text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">电话</h3>
+          <p class="text-gray-600">010-12345678</p>
+          <p class="text-gray-600 mt-2">138-8888-8888</p>
+        </div>
+        
+        <div class="bg-white p-8 rounded-xl shadow-md text-center card-hover">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fa fa-clock-o text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">营业时间</h3>
+          <p class="text-gray-600">周一至周日 8:00-20:00</p>
+          <p class="text-gray-600 mt-2">全年无休，节假日正常营业</p>
+        </div>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <!-- 这里放置地图，实际项目中可以嵌入Google Maps或百度地图 -->
+        <div class="h-96 bg-gray-200 rounded-lg overflow-hidden relative">
+          <img src="https://picsum.photos/id/1019/1200/600" alt="地图位置示意图" class="w-full h-full object-cover">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="bg-primary text-white px-6 py-3 rounded-full font-medium shadow-lg">
+              宠爱之家小院位置
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <i class="fa fa-paw text-primary text-3xl"></i>
+            <span class="text-xl font-bold text-white">宠爱之家</span>
+          </div>
+          <p class="text-gray-400 mb-6">用心呵护每一位毛孩子，让它们在您不在身边时也能感受到家的温暖。</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-weixin text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-weibo text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-instagram text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+              <i class="fa fa-youtube-play text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">快速链接</h4>
+          <ul class="space-y-3">
+            <li><a href="#home" class="text-gray-400 hover:text-primary transition-colors">首页</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-primary transition-colors">关于我们</a></li>
+            <li><a href="#environment" class="text-gray-400 hover:text-primary transition-colors">环境展示</a></li>
+            <li><a href="#services" class="text-gray-400 hover:text-primary transition-colors">服务项目</a></li>
+            <li><a href="#prices" class="text-gray-400 hover:text-primary transition-colors">价格套餐</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-primary transition-colors">联系我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">服务项目</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">宠物寄养</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">宠物美容</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">宠物训练</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">宠物接送</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">宠物摄影</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">订阅资讯</h4>
+          <p class="text-gray-400 mb-4">订阅我们的资讯，获取最新活动和宠物护理知识</p>
+          <form class="flex">
+            <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-dark">
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg transition-colors">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
+        <p>© 2023 宠爱之家宠物寄养小院 版权所有 | 京ICP备12345678号</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary hover:bg-primary/90 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible">
+    <i class="fa fa-angle-up text-xl"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 100) {
+        navbar.classList.add('py-2', 'shadow-md');
+        navbar.classList.remove('py-4');
+        backToTop.classList.remove('opacity-0', 'invisible');
+        backToTop.classList.add('opacity-100', 'visible');
+      } else {
+        navbar.classList.add('py-4');
+        navbar.classList.remove('py-2', 'shadow-md');
+        backToTop.classList.add('opacity-0', 'invisible');
+        backToTop.classList.remove('opacity-100', 'visible');
+      }
+    });
+    
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuToggle.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+      if (mobileMenu.classList.contains('hidden')) {
+        menuToggle.innerHTML = '<i class="fa fa-bars text-2xl"></i>';
+      } else {
+        menuToggle.innerHTML = '<i class="fa fa-times text-2xl"></i>';
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // 关闭移动菜单（如果打开）
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          menuToggle.innerHTML = '<i class="fa fa-bars text-2xl"></i>';
+        }
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // 返回顶部
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 图片懒加载
+    document.addEventListener("DOMContentLoaded", function() {
+      const lazyImages = [].slice.call(document.querySelectorAll("img"));
+      
+      if ("IntersectionObserver" in window) {
+        let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              let lazyImage = entry.target;
+              lazyImage.src = lazyImage.src;
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
+        });
+        
+        lazyImages.forEach(function(lazyImage) {
+          lazyImageObserver.observe(lazyImage);
+        });
+      }
+    });
+  </script>
+
+
+</body></html>
